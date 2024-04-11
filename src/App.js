@@ -1,4 +1,34 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+const express = require('express');
+const express = require('express');
+const app = express();
+const PORT = 8080;
+
+// Danh sách blog (tạm thời hardcode)
+const blogs = [
+  { id: 1, title: 'Blog 1', content: 'Nội dung blog 1' },
+  { id: 2, title: 'Blog 2', content: 'Nội dung blog 2' },
+  { id: 3, title: 'Blog 3', content: 'Nội dung blog 3' }
+];
+
+// API GET trả về danh sách blog
+app.get('/api/blogs', (req, res) => {
+  res.json(blogs);
+});
+
+// API GET trả về nội dung chi tiết của một bài blog
+app.get('/api/blogs/:id', (req, res) => {
+  const id = parseInt(req.params.id);
+  const blog = blogs.find(blog => blog.id === id);
+  if (!blog) {
+    return res.status(404).json({ message: 'Bài blog không tồn tại' });
+  }
+  res.json(blog);
+});
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
 function Home() {
 return (
 <div style={{ padding: 20 }}>
